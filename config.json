@@ -1,0 +1,6 @@
+{
+    "rewards_options":  {
+            "browser": "firefox",
+            "use_workflow": "true"
+    }
+}
