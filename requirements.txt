@@ -1,2 +1,2 @@
-requests
 browser_cookie3
+requests
