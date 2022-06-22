@@ -4,6 +4,11 @@ Hi! You can just call me Cocogoat. I'm an assistant with tools and scripts to as
 ## Current Abilities:
 - I can automatically check-in to the Hoyolab website and collect rewards for you at a random time each day. This can either be ran in the background locally or by using a GitHub workflow. 
 
+## Setup:
+Option 1: Fork the repo and add LTUID and LTOKEN as repo secrets and run the GitHub workflow automatically every 24 hours.
+Option 2: Clone or download the repo locally and run main.py manually. Before you do this, update config.json with the browser
+that you normally use to login to Hoyolab and set "use_workflow" to "false". The current browsers supported are: Chrome, Firefox, Opera, Edge, Chromium, Brave, and Vivaldi. If you use something other than that, I would recommend using Option 1.
+
 ## What I Want to Learn:
 - Fishing in Teyvat
 - Cooking delicious food to keep up team morale ( ˘▽˘)っ🍜
