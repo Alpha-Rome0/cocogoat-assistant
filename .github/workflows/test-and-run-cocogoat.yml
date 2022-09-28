@@ -37,6 +37,9 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
-    - name: Run Cocogoat
+    - name: Run Cocogoat with user token
+      env:
+          LTUID: ${{ secrets.LTUID }}
+          LTOKEN: ${{ secrets.LTOKEN }}
       run: |
-        python main.py
+          python3 ./main.py
