@@ -14,6 +14,14 @@ def open_json_file(f):
         print("Sorry, the file " + f + " does not exist. Exiting.")
         exit()
 
+# check to see if a string is valid json (true), else throws ValueError and returns false
+def is_json(j):
+    try:
+        json.loads(j)
+    except ValueError as e:
+        return False
+    return True
+
 # configure script based on local or workflow option
 def is_workflow_enabled(options):
     if options.get("use_workflow") == "true":
@@ -43,6 +51,20 @@ def get_workflow_cookies():
     cookie_dictionary['ltoken'] = os.environ.get('LTOKEN')
     cookie_dictionary['accountid'] = 'e202102251931481'
     return cookie_dictionary
+
+def check_response(response):
+    if is_json(response):
+        parsed_response = response.json()
+        print(parsed_response)
+        if parsed_response['retcode'] == -100:
+            raise Exception("Rewards claim failed!")
+    else:
+        print("Response not empty but it's not valid json!")
+        print("Response was:")
+        print(response)
+        print("Exiting.")
+        exit()
+    return
 
 # send a post request with auth cookies to claim materials, primos, and food from hoyo website
 def claim_rewards(cookie_dictionary):
@@ -75,11 +97,9 @@ def claim_rewards(cookie_dictionary):
 
         r = requests.post(url, cookies=cookies)
         # print status of request
-        res = r.json()
-        if res is not None:
-            print(res)
-            if res['retcode'] == -100:
-                raise Exception("Rewards claim failed!")
+
+        if r is not None:
+            check_response(r)
         else:
             print("An empty response body was returned!")
     except KeyError as e:
