@@ -41,7 +41,7 @@ def get_workflow_cookies():
 
     cookie_dictionary['ltuid'] = os.environ.get('LTUID')
     cookie_dictionary['ltoken'] = os.environ.get('LTOKEN')
-    cookie_dictionary['accountid'] = os.environ.get('ACCOUNTID')
+    cookie_dictionary['accountid'] = 'e202102251931481'
     return cookie_dictionary
 
 # send a post request with auth cookies to claim materials, primos, and food from hoyo website
@@ -68,6 +68,7 @@ def claim_rewards(cookie_dictionary):
         ltuid = cookie_dictionary["ltuid"]
         # sometimes ltuid is missing from cookie storage, use accountid as a backup
         if ltuid == None:
+            print("ltuid not found, using accountid instead.")
             ltuid = cookie_dictionary["accountid"]
         ltoken = cookie_dictionary["ltoken"]
         cookies = {'ltuid': ltuid, 'ltoken': ltoken}
