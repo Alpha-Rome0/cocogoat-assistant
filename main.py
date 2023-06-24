@@ -50,6 +50,9 @@ def get_workflow_cookies():
     cookie_dictionary['ltuid'] = os.environ.get('LTUID')
     cookie_dictionary['ltoken'] = os.environ.get('LTOKEN')
     cookie_dictionary['accountid'] = 'e202102251931481'
+    cookie_dictionary['cookie_token_v2'] = os.environ.get('COOKIE_TOKEN_V2')
+    cookie_dictionary['account_mid_v2'] = os.environ.get('ACCOUNT_MID_V2')
+    cookie_dictionary['account_id_v2'] = os.environ.get('ACCOUNT_ID_V2')
     return cookie_dictionary
 
 def check_response(response):
@@ -93,7 +96,10 @@ def claim_rewards(cookie_dictionary):
             print("ltuid not found, using accountid instead.")
             ltuid = cookie_dictionary["accountid"]
         ltoken = cookie_dictionary["ltoken"]
-        cookies = {'ltuid': ltuid, 'ltoken': ltoken}
+        cookie_token_v2 = cookie_dictionary['cookie_token_v2']
+        account_mid_v2 = cookie_dictionary['account_mid_v2']
+        account_id_v2 = cookie_dictionary['account_id_v2']
+        cookies = {'ltoken': ltoken, 'ltuid': ltuid, 'cookie_token_v2': cookie_token_v2, 'account_mid_v2': account_mid_v2, 'account_id_v2': account_id_v2}
 
         r = requests.post(url, headers=headers, params=params, cookies=cookies, json=data)
         # print status of request
@@ -101,7 +107,7 @@ def claim_rewards(cookie_dictionary):
         if r is not None:
             if r.status_code is not None: print(r.status_code)
             print(r.text)
-            check_response(r.text)
+            check_response(r)
         else:
             print("An empty response body was returned!")
     except KeyError as e:
