@@ -95,7 +95,7 @@ def claim_rewards(cookie_dictionary):
         ltoken = cookie_dictionary["ltoken"]
         cookies = {'ltuid': ltuid, 'ltoken': ltoken}
 
-        r = requests.post(url, cookies=cookies)
+        r = requests.post(url, headers=headers, params=params, cookies=cookies, json=data)
         # print status of request
 
         if r is not None:
