@@ -99,6 +99,7 @@ def claim_rewards(cookie_dictionary):
         # print status of request
 
         if r is not None:
+            print(r.status_code)
             print(r.text)
             check_response(r.text)
         else:
