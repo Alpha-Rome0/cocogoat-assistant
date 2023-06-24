@@ -41,28 +41,45 @@ def get_workflow_cookies():
 
     cookie_dictionary['ltuid'] = os.environ.get('LTUID')
     cookie_dictionary['ltoken'] = os.environ.get('LTOKEN')
+    cookie_dictionary['accountid'] = os.environ.get('ACCOUNTID')
     return cookie_dictionary
 
 # send a post request with auth cookies to claim materials, primos, and food from hoyo website
 def claim_rewards(cookie_dictionary):
-    url = "https://hk4e-api-os.mihoyo.com/event/sol/sign?act_id=e202102251931481&lang=en-us"
+    # add headers to format post request properly
+    headers = {
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Content-Type': 'application/json;charset=utf-8',
+        'Origin': 'https://webstatic-sea.mihoyo.com',
+        'Connection': 'keep-alive',
+        'Referer': f'https://webstatic-sea.mihoyo.com/ys/event/signin-sea/index.html?act_id={cookie_dictionary["accountid"]}&lang=en-us',
+    }
+
+    params = (
+        ('lang', 'en-us'),
+    )
+
+    data = {'act_id': cookie_dictionary["accountid"]}
+    # this is the url for sending the post request, can also get claim status by sending a get request
+    url = "https://hk4e-api-os.mihoyo.com/event/sol/info"
 
     try:
         ltuid = cookie_dictionary["ltuid"]
-        # sometimes ltuid is missing from cookie storage, use account_id as a backup
+        # sometimes ltuid is missing from cookie storage, use accountid as a backup
         if ltuid == None:
-            ltuid = cookie_dictionary["account_id"]
+            ltuid = cookie_dictionary["accountid"]
         ltoken = cookie_dictionary["ltoken"]
         cookies = {'ltuid': ltuid, 'ltoken': ltoken}
 
-        r = requests.post(url, cookies=cookies)
+        r = requests.post(url, headers=headers, params=params, cookies=cookies, json=data)
         # print status of request
         res = r.json()
         print(res)
         if res['retcode'] == -100:
             raise Exception("claim failed")
     except KeyError as e:
-        print("Key " + e.args[0] + " is missing from cookie storage.") 
+        print("Key " + e.args[0] + " is missing from cookie storage.")
         print("Verify that either your repo secrets are correct or you are logged in correctly with your browser.")
         print("Exiting.")
         exit()
