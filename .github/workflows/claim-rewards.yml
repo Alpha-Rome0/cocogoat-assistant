@@ -41,5 +41,6 @@ jobs:
       env:
           LTUID: ${{ secrets.LTUID }}
           LTOKEN: ${{ secrets.LTOKEN }}
+          ACCOUNTID: ${{ secrets.ACCOUNTID }}
       run: |
           python3 ./main.py
