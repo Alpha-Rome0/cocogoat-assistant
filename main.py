@@ -53,7 +53,7 @@ def claim_rewards(cookie_dictionary):
         'Content-Type': 'application/json;charset=utf-8',
         'Origin': 'https://webstatic-sea.mihoyo.com',
         'Connection': 'keep-alive',
-        'Referer': f'https://webstatic-sea.mihoyo.com/ys/event/signin-sea/index.html?act_id={cookie_dictionary["accountid"]}&lang=en-us',
+        'Referer': f'https://act.hoyolab.com/ys/event/signin-sea-v3/index.html?act_id=e202102251931481',
     }
 
     params = (
@@ -88,11 +88,12 @@ def claim_rewards(cookie_dictionary):
 
 data = open_json_file('config.json')
 rewards_options = data.get("rewards_options")
-print("Rewards opts: ")
+print("Rewards options selected: ")
 print(rewards_options)
 
 cookie_dictionary = {}
 if is_workflow_enabled(rewards_options):
+    print("Using GitHub action workflow to claim rewards.")
     cookie_dictionary = get_workflow_cookies()
 else:
     if rewards_options.get("browser") is not None:
