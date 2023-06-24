@@ -56,11 +56,13 @@ def get_workflow_cookies():
     return cookie_dictionary
 
 def check_response(response):
-    if is_json(response):
-        parsed_response = response.json()
+    if is_json(response.tostring()):
+        parsed_response = json.loads(response.tostring())
         print(parsed_response)
         if parsed_response['retcode'] == -100:
             raise Exception("Rewards claim failed!")
+        elif parsed_response['retcode'] == -5003:
+            print("Traveler, you've already checked in today~")
     else:
         print("Response not empty but it's not valid json!")
         print("Response was:")
