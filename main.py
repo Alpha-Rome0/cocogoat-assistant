@@ -56,8 +56,8 @@ def get_workflow_cookies():
     return cookie_dictionary
 
 def check_response(response):
-    if is_json(response.tostring()):
-        parsed_response = json.loads(response.tostring())
+    if is_json(response.text):
+        parsed_response = json.loads(response.text)
         print(parsed_response)
         if parsed_response['retcode'] == -100:
             raise Exception("Rewards claim failed!")
