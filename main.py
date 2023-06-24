@@ -57,7 +57,10 @@ def claim_rewards(cookie_dictionary):
 
         r = requests.post(url, cookies=cookies)
         # print status of request
-        print(r.json())
+        res = r.json()
+        print(res)
+        if res['retcode'] == -100:
+            raise Exception("claim failed")
     except KeyError as e:
         print("Key " + e.args[0] + " is missing from cookie storage.") 
         print("Verify that either your repo secrets are correct or you are logged in correctly with your browser.")
