@@ -99,7 +99,8 @@ def claim_rewards(cookie_dictionary):
         # print status of request
 
         if r is not None:
-            check_response(r)
+            print(r.text)
+            check_response(r.text)
         else:
             print("An empty response body was returned!")
     except KeyError as e:
