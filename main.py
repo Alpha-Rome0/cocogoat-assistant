@@ -84,7 +84,7 @@ def claim_rewards(cookie_dictionary):
 
     data = {'act_id': cookie_dictionary["accountid"]}
     # this is the url for sending the post request, can also get claim status by sending a get request
-    url = "https://hk4e-api-os.mihoyo.com/event/sol/info"
+    url = "https://sg-hk4e-api.hoyolab.com/event/sol/sign?lang=en-us"
 
     try:
         ltuid = cookie_dictionary["ltuid"]
@@ -99,7 +99,7 @@ def claim_rewards(cookie_dictionary):
         # print status of request
 
         if r is not None:
-            print(r.status_code)
+            if r.status_code is not None: print(r.status_code)
             print(r.text)
             check_response(r.text)
         else:
