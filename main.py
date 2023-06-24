@@ -73,12 +73,15 @@ def claim_rewards(cookie_dictionary):
         ltoken = cookie_dictionary["ltoken"]
         cookies = {'ltuid': ltuid, 'ltoken': ltoken}
 
-        r = requests.post(url, headers=headers, params=params, cookies=cookies)
+        r = requests.post(url, cookies=cookies)
         # print status of request
         res = r.json()
-        print(res)
-        if res['retcode'] == -100:
-            raise Exception("claim failed")
+        if res is not None:
+            print(res)
+            if res['retcode'] == -100:
+                raise Exception("Rewards claim failed!")
+        else:
+            print("An empty response body was returned!")
     except KeyError as e:
         print("Key " + e.args[0] + " is missing from cookie storage.")
         print("Verify that either your repo secrets are correct or you are logged in correctly with your browser.")
