@@ -46,4 +46,5 @@ jobs:
           ACCOUNT_MID_V2: ${{ secrets.ACCOUNT_MID_V2 }}
           COOKIE_TOKEN_V2: ${{ secrets.COOKIE_TOKEN_V2 }}
       run: |
+          sleep $(( ( RANDOM % 10 )  + 1 ))m
           python3 ./main.py
